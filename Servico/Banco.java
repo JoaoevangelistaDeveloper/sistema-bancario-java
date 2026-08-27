@@ -2,6 +2,7 @@ package SistemaBancario.Servico;
 
 import SistemaBancario.Classes.Cliente;
 import SistemaBancario.Classes.Conta;
+import SistemaBancario.Enum.TipoConta;
 import SistemaBancario.Excecao.*;
 
 import java.io.*;
@@ -148,7 +149,7 @@ public class Banco {
         File file = new File(dados, "Conta.txt");
         try(FileWriter fw = new FileWriter(file)){
             for(Conta conta : contas){
-                fw.write(conta.getNumeroConta() + "," + conta.getSaldo() + "," + conta.getCliente().getCpf());
+                fw.write(conta.getNumeroConta() + "," + conta.getSaldo() + "," + conta.getCliente().getCpf() + "," + conta.getTipo());
                 fw.write("\n");
             }
         }catch (IOException e){
@@ -171,7 +172,8 @@ public class Banco {
                 int numeroConta = Integer.parseInt(parte[0]);
                 double saldo = Double.parseDouble(parte[1]);
                 Cliente cliente = procurarCliente(cpf);
-                Conta conta = new Conta(numeroConta, saldo, cliente);
+                TipoConta tipo = TipoConta.valueOf(parte[3]);
+                Conta conta = new Conta(numeroConta, saldo, cliente, tipo);
                 this.contas.add(conta);
             }
         }catch (IOException e){

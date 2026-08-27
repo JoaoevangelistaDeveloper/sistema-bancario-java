@@ -1,5 +1,6 @@
 package SistemaBancario.Classes;
 
+import SistemaBancario.Enum.TipoConta;
 import SistemaBancario.Servico.Formatador;
 import SistemaBancario.Servico.Movimentacao;
 
@@ -10,12 +11,19 @@ public class Conta {
     private double saldo;
     private Cliente cliente;
     private ArrayList<Movimentacao> movimentacoes;
+    private TipoConta tipo;
 
-    public Conta(int numeroConta, double saldo, Cliente cliente) {
+    public Conta(int numeroConta, double saldo, Cliente cliente, TipoConta tipo) {
         this.numeroConta = numeroConta;
         this.saldo = saldo;
         this.cliente = cliente;
         this.movimentacoes = new ArrayList<>();
+        this.tipo = tipo;
+    }
+
+    public void aplicarRendimento(){
+        double rendimento = tipo.calcularRendimento(saldo);
+        saldo += rendimento;
     }
 
     public void adicionarMovimentacao(Movimentacao movimentacao) {
@@ -42,11 +50,15 @@ public class Conta {
         this.saldo = saldo;
     }
 
+    public TipoConta getTipo() {
+        return tipo;
+    }
 
     @Override
     public String toString() {
         return "=============================\n" +
                 "Conta Bancária" + "\nNúmero: " + numeroConta  + "\nSaldo: " + Formatador.formatarMoeda(saldo) +
+                "\nTipo da conta: " + tipo +
                 "\n=============================\n";
     }
 }

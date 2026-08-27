@@ -2,6 +2,7 @@ package SistemaBancario.Test;
 
 import SistemaBancario.Classes.Cliente;
 import SistemaBancario.Classes.Conta;
+import SistemaBancario.Enum.TipoConta;
 import SistemaBancario.Excecao.*;
 import SistemaBancario.Servico.Banco;
 import SistemaBancario.Servico.Movimentacao;
@@ -24,7 +25,8 @@ public class Main {
         System.out.println("8- Buscar Conta");
         System.out.println("9- Buscar Cliente");
         System.out.println("10- Ver histórico");
-        System.out.println("11- Sair");
+        System.out.println("11- Aplicar rendimento");
+        System.out.println("0- Sair");
         System.out.println(" ");
         System.out.println("Escolha uma opção: ");
     }
@@ -61,8 +63,27 @@ public class Main {
         System.out.println("CPF do cliente: ");
         String cpf = sc.nextLine();
 
+        System.out.println("Escolha o tipo da conta:");
+        System.out.println("1- Conta Corrente");
+        System.out.println("2- Conta Poupança");
+
+        int opcao = sc.nextInt();
+        TipoConta tipo;
+
+        switch (opcao) {
+            case 1:
+                tipo = TipoConta.CORRENTE;
+                break;
+            case 2:
+                tipo = TipoConta.POUPANCA;
+                break;
+            default:
+                System.out.println("Opção inválida!");
+                return null;
+        }
+
         Cliente cliente = banco.procurarCliente(cpf);
-        Conta conta = new Conta(numeroConta, 0, cliente);
+        Conta conta = new Conta(numeroConta, 0, cliente, tipo);
         return conta;
     }
 
@@ -222,6 +243,23 @@ public class Main {
                     }
                     break;
                 case 11:
+                    try {
+                        System.out.println("Número da conta: ");
+                        int numeroConta = sc.nextInt();
+                        Conta conta = banco.procurarConta(numeroConta);
+
+
+                        conta.aplicarRendimento();
+                        System.out.println("Rendimento aplicado com sucesso!\n");
+                        System.out.println("Novo saldo: R$ " + conta.getSaldo());
+
+                    } catch (ContaInexistenteException e) {
+                        System.out.println("Erro: " + e.getMessage());
+                    } catch (ContaInvalidaException e) {
+                        System.out.println("Erro: " + e.getMessage());
+                    }
+                    break;
+                case 0:
                     banco.salvarClientes();
                     banco.salvarContas();
                     banco.salvarMovimentacoes();
