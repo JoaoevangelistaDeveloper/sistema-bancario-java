@@ -115,6 +115,12 @@ git clone <https://github.com/ejoao007y-dev/sistema-bancario-java>
 - Polimorfismo
 
 ---
+## Melhorias Aplicadas
+
+- Conta Corrente sem rendimento
+- Conta Poupança com rendimento (0.005) ao mês
+
+---  
 ## 👨‍💻 Autor
 
 Desenvolvido por **João Evangelista** como projeto de estudos em Java e Programação Orientada a Objetos.
