@@ -109,12 +109,6 @@ git clone <https://github.com/ejoao007y-dev/sistema-bancario-java>
  - Leitura e escrita de arquivos
 
 ---
-## Melhorias Futuras
-
-- Conta Corrente e Conta Poupança (Herança)
-- Polimorfismo
-
----
 ## Melhorias Aplicadas
 
 - Conta Corrente sem rendimento
